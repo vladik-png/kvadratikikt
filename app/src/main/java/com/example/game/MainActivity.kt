@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+    ///var currectLevel = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,6 +22,11 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+       /* fun startlevel(){
+            val tvLevel = findViewById<TextView>(R.id.tvLevel)
+            tvLevel.text = "Level $currectLevel"
+        }*/
         val grid = findViewById<GridLayout>(R.id.myGrid)
         for (i in 0..14) {
             val square = grid.getChildAt(i)
@@ -29,7 +36,10 @@ class MainActivity : AppCompatActivity() {
                 changeColor(square)
             }
         }
+        //startlevel()
     }
+
+
     fun randomColor(): Int {
         return (0..2).random()
     }
@@ -53,15 +63,37 @@ class MainActivity : AppCompatActivity() {
         val grid = findViewById<GridLayout>(R.id.myGrid)
         val firstSquare = grid.getChildAt(0)
         val targetColor = firstSquare.tag as Int
+        var yellow = 0
+        var red = 0
+        var green = 0
+        var result = 0
 
         for (i in 0..14) {
             val square = grid.getChildAt(i)
-
-            if (square.tag != targetColor) {
-                return
+            when (square.tag) {
+                0 -> ++red
+                1 -> ++yellow
+                2 -> ++green
             }
         }
-        dialogRestart()
+
+        if (yellow >= 7) {
+            ++result
+        }
+        if (red >= 7)
+        {
+            ++result
+        }
+        if (green >= 7)
+        {
+            ++result
+        }
+
+        if (result >= 2)
+        {
+            dialogRestart()
+        }
+
     }
 
     fun dialogRestart() {
@@ -73,4 +105,15 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+
+   /* fun checkWin() {
+        val = isWin = false
+        if (currentLevel == 1) isWin = checkLevel1()
+        if (currentLevel == 2) isWin = checkLevel2()
+        if (currentLevel == 3) isWin = checkLevel3()
+        dialogRestart()
+        if (isWin) {
+
+        }
+    } */
 }
