@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun checkLevel1(): Boolean {
+    fun checkLevel4(): Boolean {
         val grid = findViewById<GridLayout>(R.id.myGrid)
         val targetColor = grid.getChildAt(0).tag as Int
         for (i in 0..14) {
@@ -124,52 +124,61 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    fun checkLevel4(): Boolean {
-//        val grid = findViewById<GridLayout>(R.id.myGrid)
-//       for (row in 0..4) {
-//            for (col in 0..2) {
-//                val index = row * 3 + col
-//                val myColor = grid.getChildAt(index).tag as Int
-//
-//                if (col < 2) {
-//                    val rightNeighborIndex = row * 3 + (col + 1)
-//                    val rightColor = grid.getChildAt(rightNeighborIndex).tag as Int
-//                    if (myColor == rightColor) {
-//                        return false
-//                    }
-//                }
-//
-//                if (row < 4) {
-//                    val bottomNeighborIndex = (row + 1) * 3 + col
-//                    val bottomColor = grid.getChildAt(bottomNeighborIndex).tag as Int
-//                    if (myColor == bottomColor) {
-//                        return false
-//                    }
-//                }
-//            }
-//        }
-//        return true
-//    }
-
-    fun checkLevel4(): Boolean {
+    fun checkLevel1(): Boolean {
         val grid = findViewById<GridLayout>(R.id.myGrid)
-        for (row in 0..4) {
+        var yellowCount = 0
+        for (row in 0..4)
+        {
             for (col in 0..2) {
                 val index = row * 3 + col
                 val myColor = grid.getChildAt(index).tag as Int
-                if ((row == 0 || row == 2 || row == 4) && (col == 0 || col == 2)) {
-                    if (myColor != 1) {
-                        return false
-                    } else {
-                        if (myColor == 1) {
+                if (myColor == 1) {
+                    yellowCount++
+
+                    if (col < 2) {
+                        val rightNeighborIndex = row * 3 + (col + 1)
+                        val rightColor = grid.getChildAt(rightNeighborIndex).tag as Int
+                        if (rightColor == 1) {
+                            return false
+                        }
+                    }
+
+                    if (row < 4) {
+                        val bottomNeighborIndex = (row + 1) * 3 + col
+                        val bottomColor = grid.getChildAt(bottomNeighborIndex).tag as Int
+                        if (bottomColor == 1) {
                             return false
                         }
                     }
                 }
             }
         }
+        if (yellowCount == 0) {
+            return false
+        }
         return true
     }
+
+//    fun checkLevel4(): Boolean {
+//        val grid = findViewById<GridLayout>(R.id.myGrid)
+//        for (row in 0..4) {
+//            for (col in 0..2) {
+//                val index = row * 3 + col
+//                val myColor = grid.getChildAt(index).tag as Int
+//                if ((row == 0 || row == 2 || row == 4) && (col == 0 || col == 2)) {
+//                    if (myColor != 1) {
+//                        return false
+//                    }
+//                }
+//                else {
+//                        if (myColor == 1) {
+//                            return false
+//                        }
+//                    }
+//                }
+//            }
+//        return true
+//    }
 
     fun dialogWin() {
         if (currentLevel < 4) {
